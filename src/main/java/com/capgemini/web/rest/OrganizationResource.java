@@ -1,7 +1,9 @@
 package com.capgemini.web.rest;
 
 import com.capgemini.domain.Organization;
+import com.capgemini.domain.Person;
 import com.capgemini.service.OrganizationService;
+import com.capgemini.service.PersonService;
 import com.capgemini.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
@@ -11,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -20,8 +23,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * REST controller for managing {@link com.capgemini.domain.Organization}.
@@ -38,9 +43,11 @@ public class OrganizationResource {
     private String applicationName;
 
     private final OrganizationService organizationService;
+    private final PersonService personService;
 
-    public OrganizationResource(OrganizationService organizationService) {
+    public OrganizationResource(OrganizationService organizationService, PersonService personService) {
         this.organizationService = organizationService;
+        this.personService = personService;
     }
 
     /**
@@ -113,6 +120,20 @@ public class OrganizationResource {
     public ResponseEntity<Organization> getOrganization(@PathVariable Long id) {
         log.debug("REST request to get Organization : {}", id);
         Optional<Organization> organization = organizationService.findOne(id);
+
+        if (organization.isPresent()) {
+            Long groupId = organization.get().getId();
+            Set<Person> individus = new HashSet<>();
+            for (Person person : personService.findAllWithEagerRelationships(PageRequest.of(0, 1000))) {
+                for (Organization _organization : person.getBelongsTos()) {
+                    if (groupId.equals(_organization.getId()))
+                        individus.add(person);
+                }
+            }
+            if (!individus.isEmpty())
+                organization.get().setPeople(individus);
+        }
+
         return ResponseUtil.wrapOrNotFound(organization);
     }
 

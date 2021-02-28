@@ -1,7 +1,9 @@
 package com.capgemini.web.rest;
 
 import com.capgemini.domain.Location;
+import com.capgemini.domain.Organization;
 import com.capgemini.service.LocationService;
+import com.capgemini.service.OrganizationService;
 import com.capgemini.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
@@ -11,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -20,8 +23,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * REST controller for managing {@link com.capgemini.domain.Location}.
@@ -38,9 +43,11 @@ public class LocationResource {
     private String applicationName;
 
     private final LocationService locationService;
+    private final OrganizationService organizationService;
 
-    public LocationResource(LocationService locationService) {
+    public LocationResource(LocationService locationService, OrganizationService organizationService) {
         this.locationService = locationService;
+        this.organizationService = organizationService;
     }
 
     /**
@@ -107,6 +114,20 @@ public class LocationResource {
     public ResponseEntity<Location> getLocation(@PathVariable Long id) {
         log.debug("REST request to get Location : {}", id);
         Optional<Location> location = locationService.findOne(id);
+
+        if (location.isPresent()) {
+            Long lieuId = location.get().getId();
+            Set<Organization> organizations = new HashSet<>();
+            for (Organization organization : organizationService.findAllWithEagerRelationships(PageRequest.of(0, 1000))) {
+                for (Location _location : organization.getIsLocatedOns()) {
+                    if (lieuId.equals(_location.getId()))
+                        organizations.add(organization);
+                }
+            }
+            if (!organizations.isEmpty())
+                location.get().setOrganizations(organizations);
+        }
+
         return ResponseUtil.wrapOrNotFound(location);
     }
 

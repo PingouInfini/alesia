@@ -36,7 +36,7 @@ public class Location implements Serializable {
 
     @ManyToMany(mappedBy = "isLocatedOns")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnore
+    //@JsonIgnore
     private Set<Organization> organizations = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

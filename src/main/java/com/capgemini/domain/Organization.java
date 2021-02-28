@@ -50,7 +50,7 @@ public class Organization implements Serializable {
 
     @ManyToMany(mappedBy = "belongsTos")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnore
+    //@JsonIgnore
     private Set<Person> people = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

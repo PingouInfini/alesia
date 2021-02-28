@@ -33,6 +33,12 @@
                         <a [routerLink]="['/location', isLocatedOn?.id, 'view']">{{ isLocatedOn.name }}</a>{{ last ? '' : ', ' }}
                     </span>
                 </dd>
+                <dt><span jhiTranslate="alesiaApp.organization.person">A pour membre</span></dt>
+                <dd>
+                    <span *ngFor="let ppl of organization.people; let last = last">
+                        <a [routerLink]="['/person', ppl?.id, 'view']">{{ ppl.name }}</a>{{ last ? '' : ', ' }}
+                    </span>
+                </dd>
             </dl>
 
             <button type="submit"
