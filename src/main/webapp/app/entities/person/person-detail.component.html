@@ -1,0 +1,69 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="person">
+            <h2><span jhiTranslate="alesiaApp.person.detail.title">Person</span> {{ person.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="alesiaApp.person.name">Name</span></dt>
+                <dd>
+                    <span>{{ person.name }}</span>
+                </dd>
+                <dt><span jhiTranslate="alesiaApp.person.nickname">Nickname</span></dt>
+                <dd>
+                    <span>{{ person.nickname }}</span>
+                </dd>
+                <dt><span jhiTranslate="alesiaApp.person.size">Size</span></dt>
+                <dd>
+                    <span>{{ person.size }}</span>
+                </dd>
+                <dt><span jhiTranslate="alesiaApp.person.dateOfBirth">Date Of Birth</span></dt>
+                <dd>
+                    <span>{{ person.dateOfBirth }}</span>
+                </dd>
+                <dt><span jhiTranslate="alesiaApp.person.hairColor">Hair Color</span></dt>
+                <dd>
+                    <span jhiTranslate="{{ 'alesiaApp.Color.' + person.hairColor }}">{{ person.hairColor }}</span>
+                </dd>
+                <dt><span jhiTranslate="alesiaApp.person.shoeSize">Shoe Size</span></dt>
+                <dd>
+                    <span>{{ person.shoeSize }}</span>
+                </dd>
+                <dt><span jhiTranslate="alesiaApp.person.description">Description</span></dt>
+                <dd>
+                    <span>{{ person.description }}</span>
+                </dd>
+                <dt><span jhiTranslate="alesiaApp.person.photo">Photo</span></dt>
+                <dd>
+                    <div *ngIf="person.photo">
+                        <a (click)="openFile(person.photoContentType, person.photo)">
+                            <img [src]="'data:' + person.photoContentType + ';base64,' + person.photo" style="max-width: 100%;" alt="person image"/>
+                        </a>
+                        {{ person.photoContentType }}, {{ byteSize(person.photo) }}
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="alesiaApp.person.belongsTo">Belongs To</span></dt>
+                <dd>
+                    <span *ngFor="let belongsTo of person.belongsTos; let last = last">
+                        <a [routerLink]="['/organization', belongsTo?.id, 'view']">{{ belongsTo.name }}</a>{{ last ? '' : ', ' }}
+                    </span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/person', person.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

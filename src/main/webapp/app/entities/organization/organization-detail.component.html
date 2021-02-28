@@ -1,0 +1,51 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="organization">
+            <h2><span jhiTranslate="alesiaApp.organization.detail.title">Organization</span> {{ organization.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="alesiaApp.organization.name">Name</span></dt>
+                <dd>
+                    <span>{{ organization.name }}</span>
+                </dd>
+                <dt><span jhiTranslate="alesiaApp.organization.description">Description</span></dt>
+                <dd>
+                    <span>{{ organization.description }}</span>
+                </dd>
+                <dt><span jhiTranslate="alesiaApp.organization.address">Address</span></dt>
+                <dd>
+                    <span>{{ organization.address }}</span>
+                </dd>
+                <dt><span jhiTranslate="alesiaApp.organization.pieceJointe">Piece Jointe</span></dt>
+                <dd>
+                    <div *ngIf="organization.pieceJointe">
+                        <a (click)="openFile(organization.pieceJointeContentType, organization.pieceJointe)" jhiTranslate="entity.action.open">open</a>
+                        {{ organization.pieceJointeContentType }}, {{ byteSize(organization.pieceJointe) }}
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="alesiaApp.organization.isLocatedOn">Is Located On</span></dt>
+                <dd>
+                    <span *ngFor="let isLocatedOn of organization.isLocatedOns; let last = last">
+                        <a [routerLink]="['/location', isLocatedOn?.id, 'view']">{{ isLocatedOn.name }}</a>{{ last ? '' : ', ' }}
+                    </span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/organization', organization.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

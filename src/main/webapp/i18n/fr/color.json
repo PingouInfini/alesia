@@ -1,0 +1,12 @@
+{
+  "alesiaApp": {
+    "Color": {
+      "null": "",
+      "OTHER": "OTHER",
+      "WHITE": "WHITE",
+      "BROWN": "BROWN",
+      "RED": "RED",
+      "UNKNOWN": "UNKNOWN"
+    }
+  }
+}

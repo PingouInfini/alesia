@@ -1,0 +1,30 @@
+{
+  "alesiaApp": {
+    "person": {
+      "home": {
+        "title": "People",
+        "createLabel": "Genera un nuovo Person",
+        "createOrEditLabel": "Genera o modifica un Person",
+        "notFound": "No People found"
+      },
+      "created": "&Egrave; stato generato un nuovo Person con identificatore {{ param }}",
+      "updated": "&Egrave; stato aggiornato Person identificato da {{ param }}",
+      "deleted": "&Egrave; stato eliminato Person con identificatore {{ param }}",
+      "delete": {
+        "question": "Sei sicuro di volere eliminare Person {{ id }}?"
+      },
+      "detail": {
+        "title": "Person"
+      },
+      "name": "Name",
+      "nickname": "Nickname",
+      "size": "Size",
+      "dateOfBirth": "Date Of Birth",
+      "hairColor": "Hair Color",
+      "shoeSize": "Shoe Size",
+      "description": "Description",
+      "photo": "Photo",
+      "belongsTo": "Belongs To"
+    }
+  }
+}
