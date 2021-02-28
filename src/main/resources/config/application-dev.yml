@@ -37,9 +37,9 @@ spring:
       indent-output: true
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:postgresql://localhost:5432/Alesia
-    username: Alesia
-    password:
+    url: jdbc:postgresql://localhost:5432/alesia
+    username: alesia
+    password: alesia
     hikari:
       poolName: Hikari
       auto-commit: false
@@ -60,7 +60,7 @@ spring:
     cache: false
 
 server:
-  port: 8080
+  port: 8082
 
 # ===================================================================
 # JHipster specific properties
