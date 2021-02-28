@@ -1,0 +1,45 @@
+entity Person {
+    name String,
+    nickname String,
+    size Double,
+    dateOfBirth Instant,
+    hairColor Color, 
+    shoeSize Integer,
+	description String,
+    photo ImageBlob
+}
+
+enum Color {
+    OTHER, WHITE, BROWN, BROWN, RED, UNKNOWN
+}
+
+
+entity Organization {
+    name String,
+    description String,
+    address String,
+	pieceJointe Blob
+}
+
+entity Location {
+    name String
+	latitude Double,
+    longitude Double
+}
+
+relationship ManyToMany {
+    Person{belongsTo(name)} to Organization{person}
+}
+
+relationship ManyToMany {
+    Organization{isLocatedOn(name)} to Location{organization}
+}
+
+// Set pagination options
+paginate Person, Organization, Location with pagination
+
+// Use Data Transfer Objects (DTO)
+// dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl
