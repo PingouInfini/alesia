@@ -22,7 +22,7 @@
                 </dd>
                 <dt><span jhiTranslate="alesiaApp.location.organization">Belongs to</span></dt>
                 <dd>
-                    <span *ngFor="let organization of lieu.organizations; let last = last">
+                    <span *ngFor="let organization of location.organizations; let last = last">
                         <a [routerLink]="['/organization', organization?.id, 'view']">{{ organization.name }}</a>{{ last ? '' : ', ' }}
                     </span>
                 </dd>
