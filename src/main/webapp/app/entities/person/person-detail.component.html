@@ -40,7 +40,8 @@
                 <dd>
                     <div *ngIf="person.photo">
                         <a (click)="openFile(person.photoContentType, person.photo)">
-                            <img [src]="'data:' + person.photoContentType + ';base64,' + person.photo" style="max-width: 100%;" alt="person image"/>
+                            <!--<img [src]="'data:' + person.photoContentType + ';base64,' + person.photo" style="max-width: 100%;" alt="person image"/> -->
+                            <img [src]="imgSource" style="max-width: 100%;" alt="person image"/> -->
                         </a>
                         {{ person.photoContentType }}, {{ byteSize(person.photo) }}
                     </div>
