@@ -5,8 +5,6 @@
 /target/classes/static/**
 /src/test/javascript/coverage/
 
-.yo-rc.json
-
 ######################
 # Node
 ######################
